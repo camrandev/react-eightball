@@ -33,21 +33,26 @@ function Eightball({ answers = ballInfo }) {
     color: "black",
   };
 
-  const colorCounts = { green: 0, goldenrod: 0, red: 0 };
+  const defaultColorCounts = { green: 0, goldenrod: 0, red: 0 };
   const [ball, setBall] = useState(defaultState);
-  const [colorCount, setColorCounts] = useState(colorCounts);
+  const [colorCount, setColorCounts] = useState(defaultColorCounts);
 
   function clickEightball() {
     const index = Math.floor(Math.random() * answers.length);
     const answer = answers[index];
 
+    // colorCount[answer.color]++
+
     setBall(answer);
 
-    setColorCounts(prev=>{prev[answer.color]++});
+    setColorCounts(colorCount=>{
+      return {...colorCount, color:colorCount[answer.color]++}
+    });
   }
 
   function resetEightBall() {
     setBall(defaultState);
+    setColorCounts(defaultColorCounts);
   }
 
   return (
