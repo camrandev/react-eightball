@@ -31,12 +31,19 @@ function Eightball({ answers = ballInfo }) {
   const defaultState = {
     msg: "Think of a Question",
     color: "black",
-  }
+  };
+
+  const colorCounts = { green: 0, goldenrod: 0, red: 0 };
   const [ball, setBall] = useState(defaultState);
+  const [colorCount, setColorCounts] = useState(colorCounts);
 
   function clickEightball() {
     const index = Math.floor(Math.random() * answers.length);
-    setBall(answers[index]);
+    const answer = answers[index];
+
+    setBall(answer);
+
+    setColorCounts(prev=>{prev[answer.color]++});
   }
 
   function resetEightBall() {
@@ -49,10 +56,14 @@ function Eightball({ answers = ballInfo }) {
         className="eightball"
         style={{ backgroundColor: ball.color, color: "white" }}
         onClick={clickEightball}
+
       >
         <h1>{ball.msg}</h1>
       </div>
       <button onClick={resetEightBall}>Reset</button>
+      <div>green count is: {colorCount.green}</div>
+      <div>goldenrod count is: {colorCount.goldenrod}</div>
+      <div>red count is: {colorCount.red}</div>
     </div>
   );
 }
