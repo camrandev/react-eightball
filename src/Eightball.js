@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import eightball from "./eightball.css"
+import eightball from "./eightball.css";
 
 const ballInfo = [
   { msg: "It is certain.", color: "green" },
@@ -27,17 +27,32 @@ const ballInfo = [
  * to dynamically display and eightball with changing background colors
  * and messages. Returns that 8ball
  */
-function Eightball({answers = ballInfo}) {
-  const [ball, setBall] = useState({msg:'Think of a Question', color: "black"})
+function Eightball({ answers = ballInfo }) {
+  const defaultState = {
+    msg: "Think of a Question",
+    color: "black",
+  }
+  const [ball, setBall] = useState(defaultState);
 
-  function clickEightball(){
+  function clickEightball() {
     const index = Math.floor(Math.random() * answers.length);
     setBall(answers[index]);
   }
 
+  function resetEightBall() {
+    setBall(defaultState);
+  }
+
   return (
-    <div className="eightball" style= {{backgroundColor: ball.color, color: "white"}} onClick={clickEightball}>
+    <div className="eightball-container">
+      <div
+        className="eightball"
+        style={{ backgroundColor: ball.color, color: "white" }}
+        onClick={clickEightball}
+      >
         <h1>{ball.msg}</h1>
+      </div>
+      <button onClick={resetEightBall}>Reset</button>
     </div>
   );
 }
